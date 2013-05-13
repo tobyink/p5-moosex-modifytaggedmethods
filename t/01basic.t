@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 {
 	package Local::Fu;
@@ -43,7 +43,7 @@ use Test::More tests => 4;
 	with qw( Local::Fu5 );
 }
 
-my $x;
+my ($x, $y);
 {
 	package Local::Fu7;
 	use Moose;
@@ -52,6 +52,7 @@ my $x;
 	use Sub::Talisman qw( MyTag OtherTag );
 	sub foo :MyTag :OtherTag { 4 }
 	before methods_tagged('OtherTag') => sub { ++$x };
+	after methods_tagged('OtherTag') => sub { ++$y };
 }
 
 is(
@@ -70,3 +71,5 @@ is(
 );
 
 ok $x;
+
+ok $y;
