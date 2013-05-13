@@ -9,6 +9,7 @@
 	changeset [
 		item "Explain relationship with Sub::Talisman."^^Documentation;
 		item "Add test case for 'after' modifier."^^Addition;
-		item "Stop using Test::NoWarnings.."^^Removal;
+		item "Stop using Test::NoWarnings."^^Removal;
+		item "No longer support Perl 5.10.0."^^Packaging;
 	].
 
