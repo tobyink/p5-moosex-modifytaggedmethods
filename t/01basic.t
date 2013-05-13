@@ -1,7 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 5;
-use Test::NoWarnings;
+use Test::More tests => 4;
 
 {
 	package Local::Fu;
@@ -54,7 +53,6 @@ my $x;
 	sub foo :MyTag :OtherTag { 4 }
 	before methods_tagged('OtherTag') => sub { ++$x };
 }
-
 
 is(
 	Local::Fu2->foo,

@@ -8,6 +8,5 @@
 	requires          p`Moose 2.00`;
 	requires          p`MooseX::RoleQR 0.003`;
 	test_requires     p`Sub::Talisman 0.002`;
-	test_requires     p`Test::NoWarnings`;
 .
 
