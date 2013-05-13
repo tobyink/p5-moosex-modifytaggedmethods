@@ -57,6 +57,10 @@ sub methods_tagged
 1;
 __END__
 
+=pod
+
+=encoding utf-8
+
 =head1 NAME
 
 MooseX::ModifyTaggedMethods - use sub attributes to specify which methods want modifiers
