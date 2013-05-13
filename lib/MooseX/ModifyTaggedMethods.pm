@@ -7,7 +7,7 @@ use utf8;
 
 BEGIN {
 	$MooseX::ModifyTaggedMethods::AUTHORITY = 'cpan:TOBYINK';
-	$MooseX::ModifyTaggedMethods::VERSION   = '0.001';
+	$MooseX::ModifyTaggedMethods::VERSION   = '0.002';
 }
 
 use attributes ();

@@ -4,3 +4,11 @@
 	issued  2012-10-19;
 	label   "Initial release".
 
+`MooseX-ModifyTaggedMethods 0.002 cpan:TOBYINK`
+	issued  2013-05-13;
+	changeset [
+		item "Explain relationship with Sub::Talisman."^^Documentation;
+		item "Add test case for 'after' modifier."^^Addition;
+		item "Stop using Test::NoWarnings.."^^Removal;
+	].
+
