@@ -123,6 +123,24 @@ know what to do with it.
 
 =back
 
+Note that Perl does not allow you to use any old attribute without first
+declaring it:
+
+ $ perl -MTest::More=no_plan -E'sub X :Y { }; ok(1)'
+ Invalid CODE attribute: Y at -e line 1.
+ BEGIN failed--compilation aborted at -e line 1.
+ # Looks like your test exited with 255 before it could output anything.
+
+L<Sub::Talisman> provides an easy way of declaring attributes:
+
+ $ perl -MSub::Talisman=Y -MTest::More=no_plan -E'sub X :Y { }; ok(1)'
+ ok 1
+ 1..1
+
+Sub::Talisman is used in the documentation and test cases for
+MooseX::ModifyTaggedMethods, but any other technique that supports
+C<< attributes::get($coderef) >> will do.
+
 =head1 BUGS
 
 Please report any bugs to
@@ -144,7 +162,7 @@ Toby Inkster E<lt>tobyink@cpan.orgE<gt>.
 
 =head1 COPYRIGHT AND LICENCE
 
-This software is copyright (c) 2012 by Toby Inkster.
+This software is copyright (c) 2012-2013 by Toby Inkster.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
