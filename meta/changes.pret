@@ -13,3 +13,10 @@
 		item "No longer support Perl 5.10.0."^^Packaging;
 	].
 
+`MooseX-ModifyTaggedMethods 0.003 cpan:TOBYINK`
+	issued  2013-05-28;
+	changeset [
+		item "Use match::simple instead of smartmatch."^^Update;
+		item "General tidy-up."^^Change;
+	].
+
