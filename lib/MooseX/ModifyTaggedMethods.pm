@@ -1,57 +1,56 @@
 package MooseX::ModifyTaggedMethods;
 
-use 5.010001;
+use 5.008003;
 use strict;
 use warnings;
-use utf8;
 
 BEGIN {
 	$MooseX::ModifyTaggedMethods::AUTHORITY = 'cpan:TOBYINK';
-	$MooseX::ModifyTaggedMethods::VERSION   = '0.002';
+	$MooseX::ModifyTaggedMethods::VERSION   = '0.003';
 }
 
-use attributes ();
-use Carp qw( confess );
-use List::Util qw( first );
-use Moose::Exporter;
-use MooseX::RoleQR 0.003 ();
+use attributes           qw( );
+use Carp                 qw( confess );
+use List::MoreUtils      qw( any );
+use match::simple        qw( M );
+use Moose::Exporter      qw( );
+use MooseX::RoleQR 0.003 qw( );
 
-'Moose::Exporter'->setup_import_methods(
+"Moose::Exporter"->setup_import_methods(
 	with_meta => [qw/ methods_tagged /],
 );
+
+sub _test_method
+{
+	my ($test, $method) = @_;
+	my $orig = ($method->original_method || $method)->body;
+	return any { $_ |M| $test } attributes::get($orig);
+}
 
 sub methods_tagged
 {
 	my $meta   = shift;
 	my $caller = $meta->name;
-	my $test   = [ @_ ];
+	my $test   = \@_;
 	
-	if ($meta->isa('Moose::Meta::Class'))
+	if ($meta->isa("Moose::Meta::Class"))
 	{
-		my @matches;
-		foreach my $method ($meta->get_all_methods)
-		{
-			my $sub = ($method->original_method || $method)->body;
-			next unless defined(first { $_ ~~ $test } attributes::get($sub));
-			push @matches, $method->name;
-		}
-		return \@matches;
+		return [
+			map $_->name, grep _test_method($test, $_), $meta->get_all_methods
+		];
 	}
-	elsif ($meta->isa('Moose::Meta::Role')
-	and    $meta->can('deferred_modifier_class'))
+	
+	if ($meta->isa("Moose::Meta::Role") and $meta->can("deferred_modifier_class"))
 	{
 		return sub {
-			my ($name, undef, undef, undef, $klass) = @_;
+			my ($name, $klass) = @_[0,4];
 			my $method = $klass->find_method_by_name($name);
-			my $sub    = ($method->original_method || $method)->body;
-			return defined(first { $_ ~~ $test } attributes::get($sub));
+			return _test_method($test, $method);
 		};
 	}
-	else
-	{
-		confess "methods_tagged() can only be used within "
-			. "Moose classes and MooseX::RoleQR roles";
-	}
+	
+	confess "methods_tagged() can only be used within "
+		. "Moose classes and MooseX::RoleQR roles";
 }
 
 1;
@@ -147,6 +146,8 @@ C<< attributes::get($coderef) >> will do.
 
 =head1 BUGS
 
+Test suite mysteriously seems to fail using L<forkprove|App::ForkProve>.
+
 Please report any bugs to
 L<http://rt.cpan.org/Dist/Display.html?Queue=MooseX-ModifyTaggedMethods>.
 
@@ -176,4 +177,3 @@ the same terms as the Perl 5 programming language system itself.
 THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
 WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
 MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-
