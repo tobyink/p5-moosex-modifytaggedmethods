@@ -1,0 +1,9 @@
+@prefix deps:  <http://ontologi.es/doap-deps#> .
+
+<http://purl.org/NET/cpan-uri/dist/MooseX-ModifyTaggedMethods/project>
+	deps:runtime-requirement         [ deps:on "MooseX::RoleQR 0.003"^^deps:CpanId ];
+	deps:runtime-requirement         [ deps:on "match::simple 0.004"^^deps:CpanId ];
+	deps:runtime-requirement         [ deps:on "Moose 2.00"^^deps:CpanId ];
+	deps:test-requirement            [ deps:on "Test::More 0.61"^^deps:CpanId ];
+	deps:test-requirement            [ deps:on "Sub::Talisman 0.002"^^deps:CpanId ].
+
