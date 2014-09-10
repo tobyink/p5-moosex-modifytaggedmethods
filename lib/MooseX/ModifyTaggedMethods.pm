@@ -6,7 +6,7 @@ use warnings;
 
 BEGIN {
 	$MooseX::ModifyTaggedMethods::AUTHORITY = 'cpan:TOBYINK';
-	$MooseX::ModifyTaggedMethods::VERSION   = '0.003';
+	$MooseX::ModifyTaggedMethods::VERSION   = '0.004';
 }
 
 use attributes           qw( );
